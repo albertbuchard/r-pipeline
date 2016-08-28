@@ -450,7 +450,7 @@ ntrue = function (vector) {
 #' @param na.rm a boolean that indicates whether to ignore NA's.
 #' @param conf.interval the percent range of the confidence interval, default is 95%.
 #'
-#' @export 
+#' @export
 
 summarySE = function(data=NULL,
                      measurevar,

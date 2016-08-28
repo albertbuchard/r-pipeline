@@ -6,7 +6,7 @@ Data analysis pipeline for the R language.
 Since the repo is private for now git fork are the easiest way to contribute.
 
 ## Documentation
-TBA - see the man/ folder 
+TBA - see the man/ folder - Accessible through R studio
 
 ## Examples
 TBA - see the examples/ folder 
@@ -92,3 +92,4 @@ Markdown:
 * http://daringfireball.net/projects/markdown/syntax
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 * https://warpedvisions.org/projects/markdown-cheat-sheet
+* rd to HTML : https://stat.ethz.ch/R-manual/R-devel/library/tools/html/Rd2HTML.html

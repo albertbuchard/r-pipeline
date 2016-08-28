@@ -3,13 +3,13 @@
 Data analysis pipeline for the R language.
 
 ## Install
-
-In R-Studio : 
-install.packages("r-pipeline");
+Since the repo is private for now git fork are the easiest way to contribute.
 
 ## Documentation
+TBA - see the man/ folder 
 
 ## Examples
+TBA - see the examples/ folder 
 
 # Contribute !
 If you want to contribute to the project you can find us on :
@@ -70,24 +70,25 @@ Please see the docs () for a complete description of the functions.
   
 
 ## Readings
-https://google.github.io/styleguide/Rguide.xml
-https://github.com/klutometis/roxygen
-https://cran.r-project.org/web/packages/RUnit/vignettes/RUnit.pdf
+* Google Style Guide: https://google.github.io/styleguide/Rguide.xml
+* Roxygen: https://github.com/klutometis/roxygen
+* Unit testing: https://cran.r-project.org/web/packages/RUnit/vignettes/RUnit.pdf
+* R cheat-sheet: https://docs.google.com/document/d/1Se0awz1Jse2S0CS8tOLyug7Cr4wvmLV2be2G8Kv0wlc/edit?usp=sharing
 
 Open source tools: 
-https://www.eternalcoding.com/?p=1981
-https://gun.io/blog/maintaining-an-open-source-project/
+* https://www.eternalcoding.com/?p=1981
+* https://gun.io/blog/maintaining-an-open-source-project/
 
 Sublime text workflow for R development: 
-https://github.com/randy3k/R-Box
-https://packagecontrol.io/packages/R-snippets
-http://www.kevjohnson.org/using-r-in-sublime-text-3
-https://sublimerepl.readthedocs.io/en/latest/
-https://www.r-bloggers.com/set-up-sublime-text-for-light-weight-all-in-one-data-science-ide/
-https://github.com/randy3k/SendREPL
-https://github.com/alienhard/SublimeAllAutocomplete
+* https://github.com/randy3k/R-Box
+* https://packagecontrol.io/packages/R-snippets
+* http://www.kevjohnson.org/using-r-in-sublime-text-3
+* https://sublimerepl.readthedocs.io/en/latest/
+* https://www.r-bloggers.com/set-up-sublime-text-for-light-weight-all-in-one-data-science-ide/
+* https://github.com/randy3k/SendREPL
+* https://github.com/alienhard/SublimeAllAutocomplete
 
 Markdown:
-http://daringfireball.net/projects/markdown/syntax
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-https://warpedvisions.org/projects/markdown-cheat-sheet
+* http://daringfireball.net/projects/markdown/syntax
+* https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+* https://warpedvisions.org/projects/markdown-cheat-sheet

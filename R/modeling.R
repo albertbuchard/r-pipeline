@@ -1,20 +1,36 @@
 # modeling 
 
-#' atecFuncCrossValidatedPredictor
+#' crossValidatedPredictor
+#' @note DevStatus: one pass - utility ?/5
+#' TODO(Albert): Discuss methodology ++ 
+#' 
+#' @description Model selection tool with K-time cross validation and final validation on preserved data. 
+#' 
+#' @param data
+#' @param dVarname = NULL
+#' @param dependantVariable
+#' @param independantVariables
+#' @param type = "leaveOneOut"
+#' @param family = "gaussian"
+#' @param kTimes = NULL
+#' @param loopOverModels = T
+#' @param preservedData = F
+#' @param plotInfo = T
+#' @param TestWithRandomError = T
 #'
 #' @export
 
-atecFuncCrossValidatedPredictor = function (data,
-                                            idVarname = NULL,
-                                            dependantVariable,
-                                            independantVariables ,
-                                            type = "leaveOneOut",
-                                            family = "gaussian",
-                                            kTimes = NULL,
-                                            loopOverModels = T,
-                                            preservedData = F,
-                                            plotInfo = T,
-                                            FTestWithRandomError = T) {
+crossValidatedPredictor = function (data,
+                                    idVarname = NULL,
+                                    dependantVariable,
+                                    independantVariables ,
+                                    type = "leaveOneOut",
+                                    family = "gaussian",
+                                    kTimes = NULL,
+                                    loopOverModels = T,
+                                    preservedData = F,
+                                    plotInfo = T,
+                                    FTestWithRandomError = T) {
 
     data = copy(data)
 

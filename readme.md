@@ -23,7 +23,7 @@ The pipeline should be written following the google style guide for R : https://
 
 * A lot of refactoring as to be done to comply with the google style guide 
 * camelCase for variables UpperCamelCase for functions and objects 
-* Comments must follow the Roxygen syntax and the code must ortherwise be adequatly commented for anyone to understand how the data is processed and how results are generated. 
+* Comments must follow the Roxygen (https://github.com/klutometis/roxygen) syntax and the code must ortherwise be adequatly commented for anyone to understand how the data is processed and how results are generated. 
 * Use long and overly clear names like : CenterOnMeanOfMean(), correlatedVariableNamesArray etc.
  
 ## Testing
@@ -71,7 +71,7 @@ Please see the docs () for a complete description of the functions.
 
 ## Readings
 https://google.github.io/styleguide/Rguide.xml
-https://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html
+https://github.com/klutometis/roxygen
 https://cran.r-project.org/web/packages/RUnit/vignettes/RUnit.pdf
 
 Open source tools: 

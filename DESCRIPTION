@@ -1,9 +1,37 @@
 Package: pipeline
 Type: Package
-Title: What the Package Does (Title Case)
+Title: R-Pipeline for data analysis
+Depends:
+    R (>= 3.2),
+    htmlTable,
+    R6,
+    grid,
+    gridExtra,
+    RGraphics,
+    data.table,
+    ggplot2,
+    psych,
+    plyr,
+    Hmisc,
+    PerformanceAnalytics,
+    sensR,
+    lmtest,
+    mlogit,
+    FactoMineR,
+    missMDA,
+    WriteXLS,
+    gridExtra,
+    lubridate,
+    gtools
+Date: 2016-08-27
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: c(person("Albert", "Buchard", role = c("aut", "cre"),
+		     email = "albert.buchard at epfl.ch"),
+	      person("Pedro", "Cardoso-Leite", role = c("aut", "cre")))
+Author: Albert Buchard [aut, cre],
+    Pedro Cardoso-Leite [aut]
+Maintainer: Albert Buchard <albert.buchard@epfl.ch>
+Description: Data analysis workflow and data-analysis tools for the R language
+License: MIT
 LazyData: TRUE
+RoxygenNote: 5.0.1

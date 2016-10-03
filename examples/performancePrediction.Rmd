@@ -1,0 +1,174 @@
+---
+title: "Performance Prediction"
+author: "Albert Buchard"
+date: "15 September 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(data.table)
+setwd("~/Google Drive/dev/R/pipelineProject/r-pipeline/examples")
+pathToScriptFolder = "../R" 
+
+## Load processed data for grouped analysis and correlation data
+source(file.path(pathToScriptFolder, "modeling.R"))
+source(file.path(pathToScriptFolder, "utilities.R"))
+
+```
+
+# Prediction of performance evolution in learning a determinist trajectory
+4*4 grid
+Minimum period 7 transition, max 16
+Supposing you start in the main cycle
+Memory and learning strategy getting better with the levels 
+```{r}
+
+numberOfSubjects = 200
+performanceDT = NULL
+for (level in seq(1,30,1)) {
+  memory = logb(level, 30)*0.65+0.15
+  cyclePeriod = sample(seq(7,16),numberOfSubjects, T)
+  performance = sapply(seq(0,25,1), function(x) {
+    if (x<7) {
+      return(ntrue(sample(seq(0,1,0.01),NROW(cyclePeriod),T)<0.25)/NROW(cyclePeriod))
+    }
+    sampleOneCycleVector = sample(seq(0,1,0.01),ntrue(cyclePeriod<=x),T)
+    sampleRandomChoiceVector = sample(seq(0,1,0.01),ntrue(sampleOneCycleVector>memory)+ntrue(cyclePeriod>x),T)
+    
+    return((ntrue(sampleOneCycleVector<=memory)+ntrue(sampleRandomChoiceVector<0.25))/NROW(cyclePeriod))
+  })
+  performanceDT = rbind(performanceDT, data.table(level=level,transition=seq(0,25,1),performance=performance))
+  # sum of bool choice good / number of subjects
+}
+ggplot(performanceDT[level<13,], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+ggplot(performanceDT[level>=13,], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+
+# Using non uniform cycle size distribution (approximated with gaussian (but should not...)
+numberOfSubjects = 200
+simulateLearning = function (numberOfSubjects = 200, condition =1) {
+  performanceDT = NULL
+  for (level in seq(1,30,1)) {
+    #memory = logb(level, 30)*0.65+0.15
+    memory = rnorm(numberOfSubjects, logb(level, 30)*0.5+0.25, sd=0.2*(1-(level/300)))
+    memory[memory>1] = 1
+    memory[memory<0] = 0
+    
+    cyclePeriod = rnorm (numberOfSubjects, mean = 7, sd = 4) #sample(seq(7,16),numberOfSubjects, T)
+    cyclePeriod[cyclePeriod<7] = 7 + abs(7-cyclePeriod[cyclePeriod<7])
+    cyclePeriod = floor(cyclePeriod)
+    
+    
+    if (condition == 1) {
+      performance = sapply(seq(0,25,1), function(x) {
+        if (x<7) {
+          return(ntrue(sample(seq(0,1,0.01),NROW(cyclePeriod),T)<0.25)/NROW(cyclePeriod))
+        }
+        sampleOneCycleVector = sample(seq(0,1,0.01),ntrue(cyclePeriod<=x),T)
+        sampleRandomChoiceVector = sample(seq(0,1,0.01),ntrue(sampleOneCycleVector>memory[cyclePeriod<=x])+ntrue(cyclePeriod>x),T)
+        
+        return((ntrue(sampleOneCycleVector<=memory[cyclePeriod<=x])+ntrue(sampleRandomChoiceVector<0.25))/NROW(cyclePeriod))
+      })
+    }
+    
+    if (condition == 2) {
+      # same rule for each color
+      numberOfLearnedRules = floor(rnorm(numberOfSubjects, logb(level, 30)*3, sd=1-(level/300)))
+      numberOfLearnedRules[numberOfLearnedRules>4] = 4
+      numberOfLearnedRules[numberOfLearnedRules<0] = 0
+      print(numberOfLearnedRules)
+      
+      ## there's a way to introduce bias due choose same rule for the random color if the random rule is not learned 
+      ## subject will try to find a common rule for this color if he did not learn
+      learnedRandomRule = sample(seq(0,1,0.05), numberOfSubjects, T) < logb(level, 30)*rnorm(numberOfSubjects, 0.8, sd=1-(level/300))
+      
+      performance = sapply(seq(0,25,1), function(x) {
+        colorType = sample(seq(1,5,1), numberOfSubjects,T)
+        isRuleLearned = numberOfLearnedRules>=colorType
+        
+        
+        sampleOneCycleVector = sample(seq(0,1,0.01),ntrue(cyclePeriod[isRuleLearned==F]<=x),T)
+        memoryForNotLearned = memory[isRuleLearned==F]
+        sampleRandomChoiceVector = sample(seq(0,1,0.01),
+                                        ntrue(sampleOneCycleVector>memoryForNotLearned[cyclePeriod[isRuleLearned==F]<=x])+
+                                          ntrue(cyclePeriod[isRuleLearned==F]>x),T)
+        # print("------")
+        # print(NROW(isRuleLearned))
+        # print(NROW(memoryForNotLearned))
+        #  print("*")
+        # print(NROW(sampleOneCycleVector))
+        # print(NROW(sampleRandomChoiceVector))
+        # print(ntrue(isRuleLearned))
+        
+        return((ntrue(sampleOneCycleVector<=memoryForNotLearned[cyclePeriod[isRuleLearned==F]<=x])+
+                  ntrue(sampleRandomChoiceVector<0.25)+
+                  ntrue(isRuleLearned))/NROW(cyclePeriod))
+      })
+      
+      
+    }
+    
+    performanceDT = rbind(performanceDT, data.table(level=level,transition=seq(0,25,1),performance=performance))
+    # sum of bool choice good / number of subjects
+  }
+  return(performanceDT)
+}
+
+performanceDT200 = simulateLearning(numberOfSubjects)
+
+ggplot(performanceDT200[level<13,], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+ggplot(performanceDT200[level>=13&level<=24,], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+
+numberOfSubjects = 1
+performanceDTOne = simulateLearning(numberOfSubjects)
+performanceDTOne[,choice:= "Correct"]
+performanceDTOne[performance==0, choice := "Incorrect"]
+performanceDTOne$choice = factor(performanceDTOne$choice, levels = c("Incorrect","Correct"))
+ggplot(performanceDTOne[level<13,], aes(x=transition, y=choice)) + geom_point() + facet_wrap(~level, ncol=4)
+ggplot(performanceDTOne[level%in%c(1,15,30),], aes(x=transition, y=choice)) + geom_point() + facet_wrap(~level, ncol=4)
+
+performanceDT200Cond2 = simulateLearning(numberOfSubjects, 2)
+
+ggplot(performanceDT200Cond2[level<13,], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+ggplot(performanceDT200Cond2[level>=13&level<=24,], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+ggplot(performanceDT200Cond2[level%in%c(1,15,30),], aes(x=transition, y=performance)) + geom_point() + facet_wrap(~level, ncol=4)
+
+for (level in seq(1,30,1)) {
+  if (level >20) {
+    lambda = 1
+  } else {
+    if (level<5) {
+      lambda = level/10
+    } else {
+      lambda = level/20 + 0.25
+    }
+    
+  }
+  performance = data.table(x=seq(0,25,1), y=c(rep(0.25,7),sapply(seq(0,18,1), function(x) { return(sigmoid(x, c(0.6+level/100, lambda, 13-(level*0.5))) * 0.75 + 0.25) } )))
+  toPlot = ggplot(performance, aes(x=x,y=y)) + geom_point()
+  print(toPlot)
+}
+```
+
+# Prediction of performance evolution in general rule condition
+4*4 grid
+Minimum period 7 transition
+Supposing you start in the main cycle
+Memory and learning strategy getting better with the levels 
+```{r}
+for (level in seq(1,30,1)) {
+  if (level >20) {
+    lambda = 5
+  } else {
+    if (level<5) {
+      lambda = level/5
+    } else {
+      lambda = 5*level/20
+    }
+    
+  }
+  performance = data.table(x=seq(0,25,1), y=sapply(seq(0,25,1), function(x) { return(sigmoid(x, c(1, lambda, 12-(level*0.2))) * 0.75 + 0.25) } ))
+  toPlot = ggplot(performance, aes(x=x,y=y)) + geom_point()
+  print(toPlot)
+}
+```

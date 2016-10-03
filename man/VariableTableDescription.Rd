@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatting.R
 \name{VariableTableDescription}
 \alias{VariableTableDescription}
-\title{VariableTableDescription 
+\title{VariableTableDescription
 TODO(Albert): Put in BeNice ??}
 \usage{
 VariableTableDescription(data, variables, idVariable = "id", precision = 2)

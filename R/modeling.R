@@ -1,11 +1,11 @@
-# modeling 
+# modeling
 
 #' crossValidatedPredictor
 #' @note DevStatus: one pass - utility ?/5
-#' TODO(Albert): Discuss methodology ++ 
-#' 
-#' @description Model selection tool with K-time cross validation and final validation on preserved data. 
-#' 
+#' TODO(Albert): Discuss methodology ++
+#'
+#' @description Model selection tool with K-time cross validation and final validation on preserved data.
+#'
 #' @param data
 #' @param dVarname = NULL
 #' @param dependantVariable
@@ -350,5 +350,22 @@ crossValidatedPredictor = function (data,
 
 
   #  writeLines(paste("If preserved dataset used for training and testing, mean residuals would have been : ", mean(residualsIfTrainedOnIt)))
+
+}
+
+#' sigmoid function
+#'
+#'@description credits: Kyriakos Chatzidimitriou
+#'http://kyrcha.info/2012/07/08/tutorials-fitting-a-sigmoid-function-in-r/
+#'
+sigmoid = function(x, params=c(1,1,0), type = "exp") {
+  switch(type,
+         exp={
+           return(params[1] / (1 + exp(-params[2] * (x - params[3]))))
+         },
+         power={
+           return(param[1]^param[3]/param[1]^param[3]+param[2]^param[3])
+         },
+         stop("sigmoid: invalid type (should be exp or power)."))
 
 }

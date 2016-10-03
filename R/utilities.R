@@ -1,5 +1,5 @@
-# small utility functions 
-# TODO(Albert): Discuss use - Filter 
+# small utility functions
+# TODO(Albert): Discuss use - Filter
 
 
 #' stripAsFactor
@@ -234,7 +234,13 @@ Winsorize <- function(x, minval = NULL, maxval = NULL,
 #'
 #' @export
 #'
-specify_decimal <- function(x, k) format(round(x, k), nsmall=k)
+specify_decimal <- function(x, k) {
+  if (is.double(x)) {
+    return(format(round(x, k), nsmall=k))
+  } else {
+    return(x)
+  }
+}
 
 ## Match with negation
 '%nin%' = Negate('%in%')
@@ -457,7 +463,7 @@ summarySE = function(data=NULL,
                      groupvars=NULL,
                      na.rm=FALSE,
                      conf.interval=.95,
-                     .drop=TRUE) 
+                     .drop=TRUE)
 {
 
     # New version of length which can handle NA's: if na.rm==T, don't count them

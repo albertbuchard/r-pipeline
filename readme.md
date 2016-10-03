@@ -22,7 +22,7 @@ If you want to contribute to the project you can find us on :
 The pipeline should be written following the google style guide for R : https://google.github.io/styleguide/Rguide.xml
 
 * A lot of refactoring as to be done to comply with the google style guide 
-* camelCase for variables UpperCamelCase for functions and objects 
+* camelCase for variables PascalCase for functions and objects 
 * Comments must follow the Roxygen (https://github.com/klutometis/roxygen) syntax and the code must ortherwise be adequatly commented for anyone to understand how the data is processed and how results are generated. 
 * Use long and overly clear names like : CenterOnMeanOfMean(), correlatedVariableNamesArray etc.
  
@@ -93,3 +93,7 @@ Markdown:
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 * https://warpedvisions.org/projects/markdown-cheat-sheet
 * rd to HTML : https://stat.ethz.ch/R-manual/R-devel/library/tools/html/Rd2HTML.html
+
+
+## Other projects of interest
+* http://www.martinos.org/mne/stable/index.html

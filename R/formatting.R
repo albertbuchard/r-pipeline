@@ -2,9 +2,9 @@
 
 
 #' SummaryToText BNICE
-#' TODO(Albert): Example - Put in BeNice? - make it more general able to summarize all kinds of tests 
+#' TODO(Albert): Example - Put in BeNice? - make it more general able to summarize all kinds of tests
 #'
-#' @description Produce text description of 95% CI APA style from a summary table, or an anovaTest.  
+#' @description Produce text description of 95% CI APA style from a summary table, or an anovaTest.
 #'
 #' @param summaryTable A data table following the classic summarySE format group N value sd se and ci
 #' @param type Either CI or SD
@@ -118,7 +118,7 @@ SummaryToText = function (summaryTable, anovaTest = NULL, type = "CI", precision
                 return(c(testText,formatOut))
 }
 
-#' VariableTableDescription 
+#' VariableTableDescription
 #' TODO(Albert): Put in BeNice ??
 #'
 #' @description Creates an HTML table to describe one or several variables in terms of Mean, SD, Range, Skewness, Kurtosis, Internal consistency methodology varies for variable types and will not be included.

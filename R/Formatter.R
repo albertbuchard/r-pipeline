@@ -61,7 +61,7 @@ Formatter <- R6Class (classname = "Formatter",
                               stop("Formatter.set_data: data_definition needs to be of type data.frame or data.table")
 
                             if (auto_rename) {
-                              auto_rename = F
+                              auto_rename <- F
                               warning("Formatter.set_data: auto_rename will not be used if data_definition is != NULL")
                             }
 
@@ -75,15 +75,17 @@ Formatter <- R6Class (classname = "Formatter",
 
                         set_data_definition = function (data_definition, check_type = T) {
                           if (class(data_definition)%nin%c("data.frame", "data.table")) {
-                            stop("Formatter.set_data_definition: data_definition needs t o be of class data.frame or data.table")
+                            stop("Formatter.set_data_definition: data_definition needs to be of class data.frame or data.table")
                           }
 
                           private$format_and_set_data_definition(data_definition)
+                          private$update_definition()
                           private$format_data(T, F, check_type)
                         },
 
                         get_data_definition = function (forget_unformatted_names = F) {
                           if (!is.null(private$data_definition)) {
+                            private$update_definition()
                             return(private$data_definition)
                           } else {
 
@@ -101,28 +103,29 @@ Formatter <- R6Class (classname = "Formatter",
                             for (i in seq(1, NROW(variable_names_formatted))) {
                               column <- formatted[[variable_names_formatted[i]]]
                               column_type <- NULL
-                              column_description <- NULL
+                              column_value <- NULL
+                              column_description <- ""
                               if (is.logical(column)) {
                                 column_type <- "logical"
                               }
                               if (is.numeric(column)) {
                                 column_type <- "numeric"
-                                column_description <- paste("Value range [", specify_decimal(min(column, na.rm = T),2),",",specify_decimal(max(column, na.rm = T),2),"], average is ", specify_decimal(mean(column, na.rm = T),2), " (SD ",specify_decimal(sd(column, na.rm = T),2),"). ")
+                                column_value <- paste("Value range [", specify_decimal(min(column, na.rm = T),2),",",specify_decimal(max(column, na.rm = T),2),"], average is ", specify_decimal(mean(column, na.rm = T),2), " (SD ",specify_decimal(sd(column, na.rm = T),2),"). ")
                               }
                               if (is.character(column)) {
                                 column_type <- "character"
                               }
                               if (is.factor(column)) {
                                 column_type <- "factor"
-                                column_description <- paste("Factors are: ", paste(unique(column), collapse = ", "),". ")
+                                column_value <- paste("Factors are: ", paste(unique(column), collapse = ", "),". ")
                               }
 
                               if (is.null(column_type)) {
                                 stop(paste("Formatter.get_data_definition: column ", variable_names_formatted[i], " is neither of type numeric, character, facotr or logical : ", class(column)))
                               }
 
-                              column_description <- paste(column_description, "Number of NAs ", ntrue(is.na(column)), ". ")
-                              column_data <- data.table(name = variable_names[i], name_formatted = variable_names_formatted[i], type = column_type, description = column_description)
+                              column_value <- paste(column_value, "Number of NAs ", ntrue(is.na(column)), ". ")
+                              column_data <- data.table(name = variable_names[i], name_formatted = variable_names_formatted[i], type = column_type, values = column_value, description = column_description)
 
                               variables_data <- rbind(variables_data, column_data)
                             }
@@ -132,6 +135,7 @@ Formatter <- R6Class (classname = "Formatter",
                                                            formatted_name = as.character(variables_data$name_formatted),
                                                            is_subject_id = F,
                                                            is_group_variable = F,
+                                                           values = as.character(variables_data$values),
                                                            description = as.character(variables_data$description))
                             # TODO : make a column for names which probably needs to be redone if _a_ or _aa_ in it
 
@@ -140,6 +144,39 @@ Formatter <- R6Class (classname = "Formatter",
                         },
 
                         # Utility Methods
+                        get_variable_values = function (variable_name, use_type = NULL) {
+                          if (variable_name%in%names(private$unformatted_data)) {
+                            column <- private$unformatted_data[[variable_name]]
+                          } else if (variable_name%in%names(private$formatted_data)) {
+                            column <- private$formatted_data[[variable_name]]
+                          } else {
+                            stop(paste0("Formatter.get_variable_values: variable with name ", variable_name, " not found."))
+                          }
+
+                          column_type <- NULL
+                          column_value <- NULL
+                          column_description <- ""
+                          if ((is.logical(column))||(use_type == "logical")) {
+                            column_type <- "logical"
+                          } else if ((is.numeric(column))||(use_type == "numeric")) {
+                            column_type <- "numeric"
+                            column_value <- paste("Value range [", specify_decimal(min(column, na.rm = T),2),",",specify_decimal(max(column, na.rm = T),2),"], average is ", specify_decimal(mean(column, na.rm = T),2), " (SD ",specify_decimal(sd(column, na.rm = T),2),"). ")
+                          } else if ((is.character(column))||(use_type == "character")) {
+                            column_type <- "character"
+                          } else if ((is.factor(column))||(use_type == "factor")) {
+                            column_type <- "factor"
+                            column_value <- paste("Factors are: ", paste(unique(column), collapse = ", "),". ")
+                          }
+
+                          if (is.null(column_type)) {
+                            stop(paste("Formatter.get_data_definition: column ", variable_name, " is neither of type numeric, character, facotr or logical : ", class(column)))
+                          }
+
+                          column_value <- paste(column_value, "Number of NAs ", ntrue(is.na(column)), ". ")
+
+                          return(column_value)
+                        },
+
                         print = function(...) {
                           cat("Formatter object\n", sep = "")
                           writeLines(paste("data is set :", is.null(private$unformatted_data)))
@@ -153,6 +190,57 @@ Formatter <- R6Class (classname = "Formatter",
                             }
                           }
                           invisible(self)
+                        },
+
+                        get_formatted_names = function (old_names, definition = NULL, use_definition = T) {
+                          if (use_definition) {
+                            if (!is.null(definition)) {
+                              writeLines("Formatter.get_formatted_name: Using specified definition to return formatted names.")
+                              definition <- data.table(definition)
+                              names <- c(definition[,as.character(variable_name)],definition[,as.character(formatted_name)])
+                              nins <- old_names%nin%names
+                              result = NULL
+                              for(i in 1:NROW(old_names)) {
+                                if (nins[i]) {
+                                  writeLines(paste0("Formatter.get_formatted_name: ",  old_names[i], " not found"))
+                                  result = c(result, old_names[i])
+                                } else {
+                                  result = c(result, definition[(variable_name%in%old_names[i])|(formatted_name%in%old_names[i]), as.character(formatted_name)])
+                                }
+                              }
+                              return(result)
+                            } else if (!is.null(private$data_definition)) {
+                              writeLines("Formatter.get_formatted_name: Using already set definition to return formatted names.")
+                              names <- c(private$data_definition[,as.character(variable_name)],private$data_definition[,as.character(formatted_name)])
+                              nins <- old_names%nin%names
+                              result = NULL
+                              for(i in 1:NROW(old_names)) {
+                                if (nins[i]) {
+                                  writeLines(paste0("Formatter.get_formatted_name: ",  old_names[i], " not found"))
+                                  result = c(result, old_names[i])
+                                } else {
+                                  result = c(result, private$data_definition[(variable_name%in%old_names[i])|(formatted_name%in%old_names[i]), as.character(formatted_name)])
+                                }
+                              }
+                              return(result)
+                            }
+                          }
+
+                          # if no definition found auto-format to snake case
+                          writeLines("Formatter.get_formatted_name: No definition specified - auto-formatting names to snake_case")
+                          names <- copy(old_names)
+                          names <- gsub("([[:space:]])(\\w)", "\\U\\2", names, perl = T)
+                          names <- gsub("([-|.])", "_", names)
+                          names <- gsub("([A-Z])", "_\\L\\1", names, perl = T)
+                          names <- sub("^_", "", names)
+                          names <- gsub("[_]{2,}", "_", names)
+                          names <- gsub("_([a-z]{1})_([a-z]{1})_([a-z]{1})_",  "_\\1\\2\\3_", names)
+                          names <- gsub("_([a-z]{1})_([a-z]{1})_",  "_\\1\\2_", names)
+                          names <- gsub("_([a-z]{1})$",  "\\1", names)
+                          names <- gsub("([a-z]{1})([0-9]{1,})$",  "\\1_\\2", names)
+                          names <- sub("^([a-z]{1})_", "\\1", names)
+
+                          return(names)
                         },
 
                         # Getters and Setters
@@ -325,14 +413,59 @@ Formatter <- R6Class (classname = "Formatter",
 
                         format_and_set_data_definition = function (data_definition) {
                           if (class(data_definition)%nin%c("data.frame", "data.table")) {
-                            stop("Formatter.format_and_set_data_definition: data_definition needs t o be of class data.frame or data.table")
+                            stop("Formatter.format_and_set_data_definition: data_definition needs to be of class data.frame or data.table")
                           }
                           data_definition <- as.data.table(copy(data_definition))
                           data_definition$variable_name <- as.character(data_definition$variable_name)
                           data_definition$variable_type <- as.character(data_definition$variable_type)
                           data_definition$formatted_name <- as.character(data_definition$formatted_name)
+                          data_definition$description <- as.character(data_definition$description)
 
-                          private$data_definition <- data_definition
+                          data_names <- names(data)
+                          missing_variables <- names(data)%nin%c(data_definition$variable_name)
+                          if (any(missing_variables)) {
+                            writeLines(paste0("Formatter.format_data: ", ntrue(missing_variables)," variables are missing from the definition : ", paste0(data_names[missing_variables], collapse = ", ")))
+                          }
+
+                          current_definition = private$data_definition
+                          if (is.null(current_definition)) {
+                            current_definition = self$get_data_definition()
+                          }
+
+                          for (i in 1:NROW(current_definition)) {
+                            variable_name = current_definition[i, variable_name]
+                            definition_index = data_definition$variable_name == variable_name
+
+                            if(ntrue(definition_index)>1) {
+                              warning(paste0("Formatter.format_and_set_data_definition: more than one variable with the name ", variable_name," in the new definition "))
+                              next
+                            }
+
+                            if(!any(definition_index)) {
+                              warning(paste0("Formatter.format_and_set_data_definition: no definition for variable ", variable_name," in the new definition "))
+                              next
+                            }
+
+                            current_definition[i, ] <- data_definition[definition_index]
+                          }
+
+                          private$data_definition <- current_definition
+                        },
+
+                        update_definition = function () {
+                          #updates data_definition "values" field
+                          data_definition <- private$data_definition
+
+                          if (is.null(data_definition)) {
+                            data_definition <- self$get_data_definition()
+                          }
+
+                          for (i in 1:NROW(data_definition)) {
+                            variable_name <- data_definition[i, variable_name]
+                            data_definition[i, values := self$get_variable_values(variable_name, data_definition[i, variable_type])]
+                          }
+
+                          writeLines("Formatter.update_definition: data_definition updated with variable values.")
                         }
 
                       ))

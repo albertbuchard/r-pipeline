@@ -15,11 +15,11 @@ compareToFullModel(data, correlatedVariable, regressOverVariables,
 \item{regressOverVariables}{: string vector containing all variable names to regress on}
 }
 \description{
-Performs a likelyhood ratio test lrtest on a simple model of correlatedVariable[1] ~ correlatedVariable[2] vs a full model 
+Performs a likelyhood ratio test lrtest on a simple model of correlatedVariable[1] ~ correlatedVariable[2] vs a full model
 coreletedVariable[1] ~ correlatedVariable[2] + regressOverVariables...
 }
 \note{
-: actually note sure if this function works 
+: actually note sure if this function works
 TODO(Albert): to test - change name - integrate to larger function
 }
 

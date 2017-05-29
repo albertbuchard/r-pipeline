@@ -9,15 +9,15 @@ CheckForCorrelates(data, columnsToCorrelate = NULL, versusColumns = NULL,
 }
 \description{
 Wrapper function for PlotEachCorrelation: Filters variables with less than non-NA values, and less than 2 unique values.
-If screenSignificant is set to TRUE, only significant correlation using rcorr are specified to PlotEachCorrelation correlation between a set of variables and call plotEachCorrelation with 
-only the significantly correlated couples. The generate a data.table with all possible couples of one to one correlations to test.  
+If screenSignificant is set to TRUE, only significant correlation using rcorr are specified to PlotEachCorrelation correlation between a set of variables and call plotEachCorrelation with
+only the significantly correlated couples. The generate a data.table with all possible couples of one to one correlations to test.
 
  @param data a data frame or data table containing observations
  @param columnsToCorelate Character vector (optional) - Names of all variable to correlate (optional)
  @param format permit to choose a return format (optional)
 }
 \note{
-DevStatus: second pass - utility 5/5 
+DevStatus: second pass - utility 5/5
 TODO(Albert): Examples, name, make filter customizable
 }
 

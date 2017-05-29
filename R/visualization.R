@@ -1,4 +1,4 @@
-# visualization 
+# visualization
 # TODO(Albert): Discuss utility of all those functions - and how we should articulate BeNice and r-pipeline in the best possible way
 
 #' PlotMeanSliding
@@ -270,14 +270,22 @@ PlotXAgainstY = function(dependantVar, groupingVars, data,
             plots[[paste0(plotPrefix,groupVar,"Summary")]] = plotNew
 
         # check for homoskedasticity using the bartlett test
-        bartlettRes =  bartlett.test(as.formula(paste(dependantVar, '~ ', groupVar)), data = data)
-        bartlettPValue = specify_decimal(bartlettRes$p.value,2)
-
-        varianceText = paste("non significative, in favor of homogenous variance across groups with p=",bartlettPValue)
-        if (bartlettPValue <= 0.05) {
+        bartlettRes = NULL
+        bartlettPValue = NULL
+        formula_string = paste(dependantVar, '~ ', groupVar)
+        tryCatch({
+          bartlettRes =  bartlett.test(as.formula(formula_string), data = data)
+          bartlettPValue = specify_decimal(bartlettRes$p.value,2)
+          varianceText = paste("non significative, in favor of homogenous variance across groups with p=",bartlettPValue)
+          if (bartlettPValue <= 0.05) {
             varianceText = paste("significative, in favor of heterogenous variance across groups with p=",bartlettPValue)
-        }
-        allText = c(allText, paste(bartlettRes$method, "for", bartlettRes$data.name, "is", varianceText))
+          }
+          allText = c(allText, paste(bartlettRes$method, "for", bartlettRes$data.name, "is", varianceText))
+
+        }, error = function(e) {
+          print(paste("Pipeline_r.PlotXAgainstY: bartlett test returned an error for forumla : ", formula_string))
+        })
+
 
         #Summary text for each grouping variable depending on the significativity of the effect (and interaction will come in the next loop)
         allText = c(allText, SummaryToText(dataGroupSummary, anovaTest = anovaTest))

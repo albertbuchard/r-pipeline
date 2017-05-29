@@ -14,7 +14,7 @@ If regressOnAllVariables is T the coeficient are extraced from a regression with
 Works only for continuous dependant variables.
 }
 \note{
-DevStatus: one pass - utility 4/5 
+DevStatus: one pass - utility 4/5
 TODO(*): to discuss what is the best way to correct for variables \
 }
 

@@ -23,7 +23,7 @@ PDF or CDF of a variable.
 }
 \note{
 DevStatus: One pass - utility: ?/5
-TODO(Albert): Check if that function is not redundant - if not make it more robust 
+TODO(Albert): Check if that function is not redundant - if not make it more robust
 
 \code{atecFuncGetDensityForX} returns a data.table containing either the PDF
 or CDF of a variable.

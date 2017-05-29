@@ -1,7 +1,7 @@
 # statistics
- 
-#' correctForVariables 
-#' @note DevStatus: one pass - utility 4/5 
+
+#' correctForVariables
+#' @note DevStatus: one pass - utility 4/5
 #' TODO(*): to discuss what is the best way to correct for variables \
 #'
 #' @description Correct each variables from the variables vector using the correctVariables vector for each row of data.
@@ -9,7 +9,7 @@
 #' - not recommended since colinear variable might produce strange results. Univariate regression by default.
 #' Works only for continuous dependant variables.
 #'
-#' @export 
+#' @export
 
 correctForVariables = function (data,
                                         variables,
@@ -171,7 +171,7 @@ correctForVariables = function (data,
 #' checkForPartialCorrelation
 #' @note DevStatus: one pass - utility 4/5.
 #' TODO(Albert): make example - discuss the methodology
-#' 
+#'
 #' Uses GLM to check the correlation of couples of variables store in a DT containing two columns v1 and v2
 #' controlling for other variables specified in controled variables.
 #'
@@ -302,8 +302,8 @@ checkForPartialCorrelation = function (data,
 }
 
 #' slidingWindowComputation
-#' @note DevStatus: one pass - utility 5/5 
-#' TODO(Albert): make example 
+#' @note DevStatus: one pass - utility 5/5
+#' TODO(Albert): make example
 #'
 #' @description Function that can compute various measures (e.g mean, SD, max...) of one or several variable (computedVariables) grouped on a sliding window running across another base variable of optional size sizeOfWindow, or with number of bin numberOfBins
 #'
@@ -411,31 +411,31 @@ slidingWindowComputation = function (data,
 
 
 #' compareToFullModel
-#' @note : actually note sure if this function works 
-#' TODO(Albert): to test - change name - integrate to larger function 
-#' 
-#' @description Performs a likelyhood ratio test lrtest on a simple model of correlatedVariable[1] ~ correlatedVariable[2] vs a full model 
+#' @note : actually note sure if this function works
+#' TODO(Albert): to test - change name - integrate to larger function
+#'
+#' @description Performs a likelyhood ratio test lrtest on a simple model of correlatedVariable[1] ~ correlatedVariable[2] vs a full model
 #' coreletedVariable[1] ~ correlatedVariable[2] + regressOverVariables...
-#' 
+#'
 #'
 #' @param data dta table containing the columns of data present in coreletedVariable and resgressedVariable
 #' @param correlatedVariable : string vector with 2 rows contianing the correlated variable
 #' @param regressOverVariables : string vector containing all variable names to regress on
 #'
-#' @export 
+#' @export
 
 compareToFullModel = function (data,
                                            correlatedVariable,
                                            regressOverVariables,
                                            outputType = "store")
 {
-		# make sure the correlatedVariable are not also specified in the regressOverVariables vector 
+		# make sure the correlatedVariable are not also specified in the regressOverVariables vector
     regressOverVariables = regressOverVariables[!regressOverVariables%in%correlatedVariable]
 
     if (outputType=="print")
         print(paste0("Comparison of simple correlation models for ", paste(correlatedVariable, collapse = " and "),
                      " over a full model comprising ", paste(regressOverVariables, collapse = " and ")))
-    
+
     if (NROW(regressOverVariables)>0)
     {
         model = "glm"
@@ -513,10 +513,10 @@ compareToFullModel = function (data,
 #' @notes DevStatus: one pass - utility 1/5
 #' TODO(Albert): Redundant function. Make a more robust function that test for the type of data input.
 #'
-#' @description Wrapper function for getDensityForX 
+#' @description Wrapper function for getDensityForX
 #' PDF or CDF of a variable.
 #'
-#' \code{atecFuncGetDensityForVector} is an helper function to call \code{atecFuncGetDensityForX} with a vector.
+#' \code{atecFuncGetDensityForVector} is an helper function to call \code{getDensityForVector} with a vector.
 #'
 #' @export
 
@@ -524,14 +524,14 @@ getDensityForVector = function(vector, variableName = "variable", ...)
 {
     dataTable = data.table(v1 = as.numeric(vector))
     setnames(dataTable, "v1", variableName)
-    return(atecFuncGetDensityForX(dataTable, variableName, ...))
+    return(getDensityForVector(dataTable, variableName, ...))
 }
 
 
 #' PDF or CDF of a variable.
 #' @note DevStatus: One pass - utility: ?/5
-#' TODO(Albert): Check if that function is not redundant - if not make it more robust 
-#' 
+#' TODO(Albert): Check if that function is not redundant - if not make it more robust
+#'
 #' \code{atecFuncGetDensityForX} returns a data.table containing either the PDF
 #' or CDF of a variable.
 #'
@@ -776,7 +776,7 @@ getDensityForX = function (data, densityForVariableName,
 
 #' getDensityForXByGroupOnY
 #' @note DevStatus: one pass - utility 5/5
-#' TODO(Albert): usability - name 
+#' TODO(Albert): usability - name
 #'
 #' @description  Get the density distribution of a variable for several groups
 #'
@@ -813,7 +813,7 @@ getDensityForXByGroupOnY = function (data,
     for (i in 1:NROW(levelsOfGroupingVariable))
     {
         level = levelsOfGroupingVariable[i]
-        densityDTi = atecFuncGetDensityForX(data[get(groupByVariable)==level,],
+        densityDTi = getDensityForVector(data[get(groupByVariable)==level,],
                                             densityForVariableName,
                                             type = type,
                                             globalInterval = globalInterval,
@@ -827,12 +827,12 @@ getDensityForXByGroupOnY = function (data,
 
 
 #'CheckForCorrelates
-#' @note DevStatus: second pass - utility 5/5 
+#' @note DevStatus: second pass - utility 5/5
 #' TODO(Albert): Examples, name, make filter customizable
 #'
 #' @description Wrapper function for PlotEachCorrelation: Filters variables with less than non-NA values, and less than 2 unique values.
-#' If screenSignificant is set to TRUE, only significant correlation using rcorr are specified to PlotEachCorrelation correlation between a set of variables and call plotEachCorrelation with 
-#' only the significantly correlated couples. The generate a data.table with all possible couples of one to one correlations to test.  
+#' If screenSignificant is set to TRUE, only significant correlation using rcorr are specified to PlotEachCorrelation correlation between a set of variables and call plotEachCorrelation with
+#' only the significantly correlated couples. The generate a data.table with all possible couples of one to one correlations to test.
 #'
 #'  @param data a data frame or data table containing observations
 #'  @param columnsToCorelate Character vector (optional) - Names of all variable to correlate (optional)
@@ -977,12 +977,12 @@ CheckForCorrelates = function (data,
 }
 
 #' PlotEachCorrelation(data, couples)
-#' @note DevStatus: second pass - utility 5/5 
+#' @note DevStatus: second pass - utility 5/5
 #' TODO(Albert): Discuss methodology ++, Discrete as categorical (as underlying phenomena could drive discrete...)
-#' 
-#' @description  Exploratory data analysis function testing correlation between variable couples, using adapted statistical methodology based on the variable types. 
+#'
+#' @description  Exploratory data analysis function testing correlation between variable couples, using adapted statistical methodology based on the variable types.
 #'	Note: variable are categorized mainly by the isContinuous function - discrete variable are treated as categorical
-#' 
+#'
 #' @param data a data.table
 #' @param couples data.table needs to contain 2 columns named var1 and var2
 #' @param forPValueInferiorTo numeric value for the significance threshold
@@ -1119,7 +1119,7 @@ PlotEachCorrelation = function (data, couples, forPValueInferiorTo = "0.05", noP
     anovaAnalysis = function(d, reOrder = F)
     {
         colnamesCouple = colnames(d)
-        plotsXvsY = atecFuncPlotXAgainstY(dependantVar=colnamesCouple[1], groupingVars = colnamesCouple[2],
+        plotsXvsY = PlotXAgainstY(dependantVar=colnamesCouple[1], groupingVars = colnamesCouple[2],
                                           d, outputType = "store")
         summaryAov = summary(plotsXvsY[[1]])
         pValue = aovPValue(summaryAov)
@@ -1287,9 +1287,9 @@ PlotEachCorrelation = function (data, couples, forPValueInferiorTo = "0.05", noP
 
 #' GetSignificantPlotsXAgainstY
 #' @notes DevStatus: one pass - utility : 4/5
-#'	TODO(Albert): Discuss if this function should be public (export ?) - better description 
-#' 
-#' @description Extract information from the Anova contained in the output of atecFuncPlotXAgainstY to produce a vector of plot names better fit to show those significant data
+#'	TODO(Albert): Discuss if this function should be public (export ?) - better description
+#'
+#' @description Extract information from the Anova contained in the output of PlotXAgainstY to produce a vector of plot names better fit to show those significant data
 #'
 
 

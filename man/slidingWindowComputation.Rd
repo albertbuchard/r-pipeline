@@ -34,7 +34,7 @@ if the step is smaller than sizeOfWindow, overlap value will be generated}
 Function that can compute various measures (e.g mean, SD, max...) of one or several variable (computedVariables) grouped on a sliding window running across another base variable of optional size sizeOfWindow, or with number of bin numberOfBins
 }
 \note{
-DevStatus: one pass - utility 5/5 
+DevStatus: one pass - utility 5/5
 TODO(Albert): make example
 }
 

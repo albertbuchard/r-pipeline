@@ -7,9 +7,9 @@
 getDensityForVector(vector, variableName = "variable", ...)
 }
 \description{
-Wrapper function for getDensityForX 
+Wrapper function for getDensityForX
 PDF or CDF of a variable.
 
-\code{atecFuncGetDensityForVector} is an helper function to call \code{atecFuncGetDensityForX} with a vector.
+\code{atecFuncGetDensityForVector} is an helper function to call \code{getDensityForVector} with a vector.
 }
 

@@ -2,7 +2,7 @@
 
 #' crossValidatedPredictor
 #' @note DevStatus: one pass - utility ?/5
-#' TODO(Albert): Discuss methodology ++
+#' TODO(Albert): Discuss methodology ++ Use caret prob better
 #'
 #' @description Model selection tool with K-time cross validation and final validation on preserved data.
 #'

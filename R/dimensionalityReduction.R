@@ -1,9 +1,9 @@
 ## dimensionality reduction
 
-#' faReady 
+#' faReady
 #' @note Dev status : no pass yet - Usefulness: ?/5
 #
-#' @description After scaling the quantitative variables of the data table, 
+#' @description After scaling the quantitative variables of the data table,
 #' the function filters out subject with more than looseSubjectsWithMissingValuesOverAtLeast NAs.
 #' It return the results of the fa function on those subjects for the specified variables.
 #'
@@ -114,7 +114,7 @@ PCAReady = function (data, variables,
     limitContinuous = 7
     if (toNumeric) {
         data = copy(data)
-        toNumeric(data)
+        toNumeric(data, variables)
         limitContinuous = 1
     }
 
@@ -213,4 +213,4 @@ PCAReady = function (data, variables,
 }
 
 #'
-#' 
+#'

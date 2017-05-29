@@ -17,11 +17,11 @@ PlotEachCorrelation(data, couples, forPValueInferiorTo = "0.05",
 \item{noPrint}{boolean. If set to false no plots a build and only text and a final a correlation table is produce}
 }
 \description{
-Exploratory data analysis function testing correlation between variable couples, using adapted statistical methodology based on the variable types. 
+Exploratory data analysis function testing correlation between variable couples, using adapted statistical methodology based on the variable types.
 Note: variable are categorized mainly by the isContinuous function - discrete variable are treated as categorical
 }
 \note{
-DevStatus: second pass - utility 5/5 
+DevStatus: second pass - utility 5/5
 TODO(Albert): Discuss methodology ++, Discrete as categorical (as underlying phenomena could drive discrete...)
 }
 

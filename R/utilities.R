@@ -432,7 +432,7 @@ median.quartile <- function(x){
 #' @export
 
 shorterSafer = function (f,...) {
-    e = tryCatch(f(...), error = function(e) { return(NA) })
+    e = tryCatch(f(...), error = function(e) { return(NULL) })
     return(e)
 }
 
@@ -487,7 +487,7 @@ summarySE = function(data=NULL,
     )
 
     # Rename the "mean" column
-    datac <- rename(datac, c("mean" = measurevar))
+    datac <- plyr::rename(datac, c("mean" = measurevar))
 
     datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
 

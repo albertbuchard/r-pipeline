@@ -12,4 +12,3 @@ PDF or CDF of a variable.
 
 \code{atecFuncGetDensityForVector} is an helper function to call \code{getDensityForVector} with a vector.
 }
-

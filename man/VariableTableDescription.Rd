@@ -11,4 +11,3 @@ VariableTableDescription(data, variables, idVariable = "id", precision = 2)
 Creates an HTML table to describe one or several variables in terms of Mean, SD, Range, Skewness, Kurtosis, Internal consistency methodology varies for variable types and will not be included.
 Previously computed column can be added in the form of a vector of a matrix (m variables * n columns)
 }
-

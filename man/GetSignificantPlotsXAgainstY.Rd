@@ -9,4 +9,3 @@ GetSignificantPlotsXAgainstY(aovTest, variableNames, plotPrefix = NULL)
 \description{
 Extract information from the Anova contained in the output of PlotXAgainstY to produce a vector of plot names better fit to show those significant data
 }
-

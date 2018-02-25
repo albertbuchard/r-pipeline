@@ -9,4 +9,3 @@ isInRange(x, range)
 \description{
 check if a number is contained in an range tuple
 }
-

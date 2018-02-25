@@ -9,4 +9,3 @@ last(vector)
 \description{
 last returns the last element of a vector
 }
-

@@ -21,4 +21,3 @@ summarySE(data = NULL, measurevar, groupvars = NULL, na.rm = FALSE,
 \description{
 Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
 }
-

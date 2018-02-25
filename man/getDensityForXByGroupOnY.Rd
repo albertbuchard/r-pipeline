@@ -18,4 +18,3 @@ Get the density distribution of a variable for several groups
 DevStatus: one pass - utility 5/5
 TODO(Albert): usability - name
 }
-

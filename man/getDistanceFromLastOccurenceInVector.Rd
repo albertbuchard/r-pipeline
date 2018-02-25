@@ -10,4 +10,3 @@ getDistanceFromLastOccurenceInVector(vector, value,
 \description{
 Returns a distance vector of the same size as input each eleemtn representing the distance from the last occurence of the value in the vector
 }
-

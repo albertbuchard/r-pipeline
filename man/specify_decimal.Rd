@@ -9,4 +9,3 @@ specify_decimal(x, k)
 \description{
 Specify the decimal of a numeric input
 }
-

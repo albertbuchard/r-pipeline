@@ -24,4 +24,3 @@ Note: variable are categorized mainly by the isContinuous function - discrete va
 DevStatus: second pass - utility 5/5
 TODO(Albert): Discuss methodology ++, Discrete as categorical (as underlying phenomena could drive discrete...)
 }
-

@@ -10,4 +10,3 @@ CenterOnMeanOfMean(d, centeredVar, idVariable = "id",
 \description{
 center the variable for each subject then add the mean of mean
 }
-

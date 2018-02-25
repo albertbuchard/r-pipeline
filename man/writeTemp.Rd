@@ -14,4 +14,3 @@ DevStatus: no pass - utility ?/5 - should probably be part of better organized f
 
 Write a data frame contained into an xls file in the temporary data folder
 }
-

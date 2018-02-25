@@ -9,4 +9,3 @@ shorterSafer(f, ...)
 \description{
 Try catch, return NA if an error occurs
 }
-

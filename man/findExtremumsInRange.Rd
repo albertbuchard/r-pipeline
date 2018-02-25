@@ -10,4 +10,3 @@ findExtremumsInRange(splineFunc, range, delta, errorTolerance = 0.1,
 \description{
 getInterpolationFunction
 }
-

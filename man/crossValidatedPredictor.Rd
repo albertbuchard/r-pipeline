@@ -31,6 +31,5 @@ Model selection tool with K-time cross validation and final validation on preser
 }
 \note{
 DevStatus: one pass - utility ?/5
-TODO(Albert): Discuss methodology ++
+TODO(Albert): Discuss methodology ++ Use caret prob better
 }
-

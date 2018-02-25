@@ -10,4 +10,3 @@ Winsorize(x, minval = NULL, maxval = NULL, probs = c(0.05, 0.95),
 \description{
 Permits to set a threshold for extreme values over a certain quantile. Outlier correction technique.
 }
-

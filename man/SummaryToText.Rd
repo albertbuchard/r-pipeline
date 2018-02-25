@@ -16,4 +16,3 @@ SummaryToText(summaryTable, anovaTest = NULL, type = "CI", precision = 2,
 \description{
 Produce text description of 95% CI APA style from a summary table, or an anovaTest.
 }
-

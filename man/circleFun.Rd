@@ -9,4 +9,3 @@ circleFun(center = c(0, 0), diameter = 1, npoints = 100)
 \description{
 http://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2
 }
-

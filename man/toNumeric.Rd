@@ -12,4 +12,3 @@ Safely fransforms variable in a data table as.numeric.
 \note{
 DevStatus: one pass - utility 2/5
 }
-

@@ -9,4 +9,3 @@ isBetween(x, a, b)
 \description{
 isBetween check in a number is contained in an interval
 }
-

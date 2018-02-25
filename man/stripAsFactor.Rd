@@ -9,4 +9,3 @@ stripAsFactor(str)
 \description{
 get rid of the as.factor() around a variable name
 }
-

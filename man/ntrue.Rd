@@ -9,4 +9,3 @@ ntrue(vector)
 \description{
 little function without suffix to get the number of occurence of T in a logical vector
 }
-

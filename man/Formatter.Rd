@@ -33,6 +33,7 @@ Fields are : variable_name, formatted_name, variable_type, is_subject_id, is_gro
 description: range values - how was it obtained - what does it represent - how can it be reproduced }
   }
 }
+
 \examples{
 \dontrun{
 data <- data.table(a = c(10,7), b = c("A", "B"))
@@ -44,4 +45,3 @@ data_definition <- data.table(variable_name = c("a", "b", "c"), formatted_name =
 \keyword{format,}
 \keyword{formatting,}
 \keyword{naming,}
-

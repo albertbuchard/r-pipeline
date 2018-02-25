@@ -37,4 +37,3 @@ obtain precise distribution and interaction with an optional variable.
 Zoom interval has not been added yet
 If nBins is NULL number of bin = Number of observations/10
 }
-

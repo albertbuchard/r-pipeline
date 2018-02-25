@@ -9,4 +9,3 @@ logitToOdds(logitValue)
 \description{
 Converts logit values from e.g a GLM logit, to odds ratio
 }
-

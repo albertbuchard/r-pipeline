@@ -9,4 +9,3 @@ isContinuous(x, limit = 7)
 \description{
 Check if a variable as more than a limit number of unique values
 }
-

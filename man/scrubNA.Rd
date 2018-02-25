@@ -15,4 +15,3 @@ If left empty, the algorithm will try to scrub the columns}
 \description{
 scrubNA
 }
-

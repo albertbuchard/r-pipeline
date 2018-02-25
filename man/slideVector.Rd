@@ -12,4 +12,3 @@ slideVector(vector, by, fillIn = 0, keepSameLength = T)
 \description{
 Slides vector by a certain amount of indices.
 }
-

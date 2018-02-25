@@ -16,4 +16,3 @@ Dev status: one pass - to clean -- Usefulness: 4/5
 
 Produce NA safe PCA using principal, as well as PCA from factominr.
 }
-

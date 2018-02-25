@@ -9,4 +9,3 @@ vectorProportions(vector)
 \description{
 simple utility function to get a proportion vector summing to 1
 }
-

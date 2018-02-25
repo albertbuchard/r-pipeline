@@ -12,4 +12,3 @@ returns the point to point ratio of similarity between two vectors
 \details{
 @description if vector1 = vector2 - return 1. If no index  i exist such as vector1[i] == vector2[i] returns 0
 }
-

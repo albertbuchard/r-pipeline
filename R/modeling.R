@@ -369,3 +369,26 @@ sigmoid = function(x, params=c(1,1,0), type = "exp") {
          stop("sigmoid: invalid type (should be exp or power)."))
 
 }
+
+#' Return a function interpolating point between (from_x, from_y) and (to_x, to_y)
+#' following a logarithmic decay
+#'
+#' @param from_x numeric start point x
+#' @param from_y numeric start point y
+#' @param to_x numeric end point x
+#' @param to_y numeric end point y
+#' @param t numeric logarithmic slope
+#'
+#' @export
+#'
+generate_log_interpolation_function = function (from_x = 0, to_x = 0.05, from_y = 1, to_y = 0, t = 10) {
+  expa = exp(t*(to_y-from_y))
+  b = (-to_x*expa+from_x) / (1-expa)
+  g = (to_x - b) / exp(-t*to_y)
+  l = function(p) {
+    return(-log((p-b)/g)/t)
+  }
+
+  return(l)
+}
+

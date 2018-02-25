@@ -37,4 +37,3 @@ Function that can compute various measures (e.g mean, SD, max...) of one or seve
 DevStatus: one pass - utility 5/5
 TODO(Albert): make example
 }
-

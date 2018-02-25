@@ -20,4 +20,3 @@ controlling for other variables specified in controled variables.
 
 Normality assumption for variables : http://www.theanalysisfactor.com/dependent-variables-never-meet-normality/
 }
-

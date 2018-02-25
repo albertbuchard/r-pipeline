@@ -17,4 +17,3 @@ Works only for continuous dependant variables.
 DevStatus: one pass - utility 4/5
 TODO(*): to discuss what is the best way to correct for variables \
 }
-

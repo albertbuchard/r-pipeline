@@ -10,4 +10,3 @@ eulersMethod(a = 1, b = -1, c = 1, d = 0, x0 = 1, fx0 = 2,
 \description{
 Euler's method for ODE first order
 }
-

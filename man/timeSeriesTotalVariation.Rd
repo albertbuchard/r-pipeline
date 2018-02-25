@@ -11,8 +11,7 @@ timeSeriesTotalVariation
 }
 \note{
 DevStatus: one pass - utility 3/5
-TODO(Albert): Integrate in more general time series analysis tools 
+TODO(Albert): Integrate in more general time series analysis tools
 
 Function to calculate the total variation of a time series contained in a vector timeSeries
 }
-

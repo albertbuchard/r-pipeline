@@ -22,4 +22,3 @@ coreletedVariable[1] ~ correlatedVariable[2] + regressOverVariables...
 : actually note sure if this function works
 TODO(Albert): to test - change name - integrate to larger function
 }
-

@@ -10,4 +10,3 @@ sigmoid(x, params = c(1, 1, 0), type = "exp")
 credits: Kyriakos Chatzidimitriou
 http://kyrcha.info/2012/07/08/tutorials-fitting-a-sigmoid-function-in-r/
 }
-

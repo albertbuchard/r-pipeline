@@ -8,11 +8,10 @@ faReady(data, variables, numberOfComponents = NULL, toNumeric = T,
   looseSubjectsWithMissingValuesOverAtLeast = NULL)
 }
 \description{
-After scaling the quantitative variables of the data table, 
+After scaling the quantitative variables of the data table,
 the function filters out subject with more than looseSubjectsWithMissingValuesOverAtLeast NAs.
 It return the results of the fa function on those subjects for the specified variables.
 }
 \note{
 Dev status : no pass yet - Usefulness: ?/5
 }
-

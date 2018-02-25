@@ -12,4 +12,3 @@ constraintVariable(data, idVariable, constrainedVariable, constrainingVariables,
 Function that replace values of a certain constrained variables to a selected value (default to NA) for subject who did not fill certain constraints.
 Constraints are described in term of a list of minimum number of observation either equal or differnt from a certain value. It is an OR testing.
 }
-

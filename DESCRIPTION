@@ -34,4 +34,4 @@ Maintainer: Albert Buchard <albert.buchard@epfl.ch>
 Description: Data analysis workflow and data-analysis tools for the R language
 License: MIT
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
